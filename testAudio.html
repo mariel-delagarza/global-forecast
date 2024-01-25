@@ -12,68 +12,70 @@
     />
 
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: #f5f5f5;
-        font-family: "Source Sans 3", sans-serif;
-      }
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap");
 
       a {
         text-decoration: none;
       }
 
-      .audio-player {
+      /* Mobile-first styling -- the default is for smalls screens */
+      .audio-player-greg {
         position: relative;
-        width: 700px;
-        height: 400px;
-        /* padding: 20px; */
-        /* border: 1px solid red; */
+        width: 100%; /* Full width on smaller screens */
+        height: 411px; /* Adjust height */
+        font-family: "IBM Plex Sans", sans-serif;
+        color: #fffefa; /* Text color - for title, subtitle */
       }
 
-      .background-image-container {
+      /* These styles apply on desktop */
+      @media (min-width: 900px) {
+        .audio-player-greg {
+          margin: auto;
+          min-width: 390px;
+          max-width: 700px;
+          max-height: 400px;
+        }
+      }
+
+      .background-image-container-greg {
         position: absolute;
-        top: 0;
+        border-radius: 20px;
+        bottom: 0;
         left: 0;
         width: 100%;
-        height: 100%; /* Adjust the height as needed */
+        height: 95%;
         overflow: hidden;
         z-index: 1;
       }
 
-      .background-image {
+      .background-image-greg {
         width: 100%;
         height: auto;
       }
 
-      .controls-container {
+      .controls-container-greg {
         position: absolute;
+        padding-top: 10px;
         width: 100%;
-        /* padding: 20px; */
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.75
-        ); /* semi-transparent white */
+        height: auto;
+        border-radius: 20px;
+        background-color: #0d1e45; /* Background color for the white box */
         z-index: 2;
-        /* Other styling for controls */
         bottom: 0;
       }
 
-      #title {
+      #title-greg {
         margin: 5px 0 5px 20px;
+        max-width: 90%;
+        /* line-height: 30px; */
       }
 
-      #subtitle {
+      #subtitle-greg {
         margin: 0 0 20px 20px;
       }
 
-      .controls {
+      .controls-greg {
+        position: static;
         display: flex;
         justify-content: space-around;
         margin: 20px 0px 20px 0px;
@@ -83,61 +85,62 @@
         cursor: pointer;
       }
 
-      .progress-container {
-        width: calc(
-          100% - 40px
-        ); /* Subtract 40px from the total width: 20px left and 20px right */
+      .progress-container-greg {
+        width: calc(100% - 40px);
         height: 20px;
-        margin: auto;
-        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 2px;
+        margin: 15px auto 0 auto;
+        background-color: #ffffff30; /* Background color for the progress bar */
         position: relative;
       }
 
-      .progress-bar {
+      .progress-bar-greg {
         height: 100%;
-        background-color: #0066cc;
+        border-radius: 2px;
+        background-color: #fffefa; /* Color of the progress bar */
         width: 0%;
       }
 
-      .svg-icon {
+      .svg-icon-greg {
         width: 35px;
         height: 35px;
         margin: 10px;
       }
 
-      .menu-icon {
+      .menu-icon-greg {
         width: 1em; /* 1em is equal to the current font size */
         height: 1em; /* 1em is equal to the current font size */
-        margin-right: 0.5em; /* Adjust the space between the icon and the text */
+        margin-right: 1.5em; /* Adjust the space between the icon and the text */
         vertical-align: middle; /* This will vertically center the icon with the text */
         filter: invert(0%) sepia(6%) saturate(7%) hue-rotate(324deg)
-          brightness(99%) contrast(100%);
+          brightness(99%) contrast(100%); /* This is the default filter for the icons */
       }
 
-      .filter-dark {
-        filter: invert(0%) sepia(6%) saturate(7%) hue-rotate(324deg)
-          brightness(99%) contrast(100%);
+      .filter-dark-greg {
+        filter: invert(100%) sepia(59%) saturate(541%) hue-rotate(298deg)
+          brightness(104%) contrast(105%);
+        /* This is the default filter for the icons */
       }
 
-      .kebab-menu {
+      .kebab-menu-greg {
         position: absolute;
-        top: 0; /* Align to the top of the controls-container */
-        right: 0; /* Align to the right of the controls-container */
+        top: 0; /* Align to the top of the controls-container-greg */
+        right: 0; /* Align to the right of the controls-container-greg */
         padding: 5px; /* Add some space */
       }
 
-      .menu-content {
+      .menu-content-greg {
         display: none;
         position: absolute;
         right: 0; /* Align the dropdown to the right side of the kebab icon */
         background-color: #f9f9f9;
-        min-width: 180px; /* Minimum width of the dropdown content */
+        min-width: 200px; /* Minimum width of the dropdown content */
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
       }
 
-      .menu-content button {
-        color: black;
+      .menu-content-greg button {
+        color: #000; /* Text color for the menu buttons */
         padding: 12px 16px;
         text-decoration: none;
         background: transparent;
@@ -147,17 +150,17 @@
         text-align: left;
       }
 
-      .menu-content button:hover {
+      .menu-content-greg button:hover {
         background-color: #0a2458; /* Hover effect for buttons */
-        color: #fcfcfc;
+        color: #fcfcfc; /* Text color for the menu buttons */
       }
 
-      .menu-content button:hover .menu-icon {
+      .menu-content-greg button:hover .menu-icon-greg {
         filter: invert(100%) sepia(2%) saturate(22%) hue-rotate(243deg)
-          brightness(107%) contrast(95%);
+          brightness(107%) contrast(95%); /* Hover effect for menu icons */
       }
 
-      .playback-speed-menu {
+      .playback-speed-menu-greg {
         position: absolute;
         top: 0; /* Adjust this as needed */
         right: 10px; /* Adjust to align with the kebab menu */
@@ -168,135 +171,137 @@
         overflow-y: scroll;
       }
 
-      .playback-speed-menu select {
+      .playback-speed-menu-greg select {
         padding: 5px;
         border: 1px solid #ccc;
       }
     </style>
   </head>
   <body>
-    <div class="audio-player" id="audioPlayer">
-      <!-- Background image container -->
-      <div class="background-image-container">
+    <div class="audio-player-greg" id="audioPlayerGreg">
+      <div class="background-image-container-greg">
         <img
-          src="https://csis-website-prod.s3.amazonaws.com/s3fs-public/styles/768x461/s3/2024-01/AdobeStock_72533298_Crop1.jpg?VersionId=V86Iu3s.Wf0_igN8ZtH6BWy0F5jpPpdK&h=266da715&itok=EZGgWc_H"
+          src="https://res.cloudinary.com/dz3ukgab7/image/upload/f_auto,q_auto/v1/GF%20Audio%20Briefs/GF_radial"
           alt="Background"
-          class="background-image"
+          class="background-image-greg"
         />
       </div>
-      <div class="controls-container">
-        <div class="audio-info">
-          <h1 id="title">Title</h1>
-          <h2 id="subtitle">Subtitle</h2>
+      <div class="controls-container-greg">
+        <div class="audio-info-greg">
+          <h3 id="title-greg">
+            Audio Brief: Gregory C. Allen on U.S.-China Technology Competition
+          </h3>
         </div>
         <audio
-          id="audio"
+          id="audio-greg"
           src="https://res.cloudinary.com/dz3ukgab7/video/upload/fl_attachment/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_GregAllen"
         ></audio>
-        <div id="progressContainer" class="progress-container">
-          <div id="progressBar" class="progress-bar"></div>
+        <div id="progressContainer" class="progress-container-greg">
+          <div id="progreeBarGreg" class="progress-bar-greg"></div>
         </div>
-        <div class="controls">
+        <!-- ---------- These are the audio controls ----------- -->
+        <div class="controls-greg">
           <img
             src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117793/Shorthand/Global%20Forecast/backward-3-svgrepo-com.svg"
-            class="filter-dark svg-icon"
-            id="skip-to-start"
+            class="filter-dark-greg svg-icon-greg"
+            id="skip-to-start-greg"
             alt="Skip to start"
           />
           <img
-            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117774/Shorthand/Global%20Forecast/backward-10-seconds-svgrepo-com.svg"
-            class="filter-dark svg-icon"
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706202122/Shorthand/Global%20Forecast/backward.svg"
+            class="filter-dark-greg svg-icon-greg"
             alt="Skip back 10 seconds"
-            id="skip-back"
+            id="skip-back-greg"
           />
           <img
             src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117784/Shorthand/Global%20Forecast/play-svgrepo-com.svg"
-            class="filter-dark svg-icon"
-            id="play-pause"
+            class="filter-dark-greg svg-icon-greg"
+            id="play-pause-greg"
             alt="Play"
           />
           <img
-            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117768/Shorthand/Global%20Forecast/forward-10-seconds-svgrepo-com.svg"
-            class="filter-dark svg-icon"
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward.svg"
+            class="filter-dark-greg svg-icon-greg"
             alt="Skip forward 10 seconds"
-            id="skip-forward"
+            id="skip-forward-greg"
           />
           <img
-            src="
-        https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward-3-svgrepo-com.svg"
-            class="filter-dark svg-icon"
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward-3-svgrepo-com.svg"
+            class="filter-dark-greg svg-icon-greg"
             alt="Skip forward 10 seconds"
-            id="skip-to-end"
+            id="skip-to-end-greg"
           />
-          <div class="kebab-menu">
+          <!-- --- This is the menu for download, share, etc. ---- -->
+          <div class="kebab-menu-greg">
             <img
               src="https://res.cloudinary.com/csisideaslab/image/upload/v1706120568/Shorthand/Global%20Forecast/kebab-menu-svgrepo-com.svg"
-              class="filter-dark svg-icon"
-              id="menu-button"
+              class="filter-dark-greg svg-icon-greg"
+              id="menu-button-greg"
               alt="Menu"
             />
-            <div class="menu-content" id="menuContent" style="display: none">
-              <button id="download-audio">
+            <div
+              class="menu-content-greg"
+              id="menuContentGreg"
+              style="display: none"
+            >
+              <button type="button" id="download-audio-greg">
                 <img
                   src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
-                  class="filter-dark menu-icon"
+                  class="menu-icon-greg"
                   alt="Download Icon"
                 />
                 Download Audio
               </button>
-              <a
-                href="https://csis-website-prod.s3.amazonaws.com/s3fs-public/2024-01/240122_Lin_Surveying_Experts.pdf?VersionId=KpijDB0VBA6tKMBZd_TRr4DLn3YXcXsF"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <button id="download-transcript" type="button">
-                  <img
-                    src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
-                    class="filter-dark menu-icon"
-                    alt="Download Icon"
-                  />
-                  Download Transcript
-                </button>
-              </a>
-              <button id="share-audio">
+              <button type="button" id="download-transcript-greg">
+                <img
+                  src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
+                  class="menu-icon-greg"
+                  alt="Download Icon"
+                />
+                Download Transcript
+              </button>
+              <button type="button" id="share-audio-greg">
                 <img
                   src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148595/Shorthand/Global%20Forecast/share-alt-svgrepo-com.svg"
-                  class="filter-dark menu-icon"
+                  class="menu-icon-greg"
                   alt="Share Icon"
                 />
                 Share Audio
               </button>
-              <button id="playback-speed">
+              <button type="button" id="playback-speed-greg">
                 <img
                   src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148589/Shorthand/Global%20Forecast/playback-speed-svgrepo-com.svg"
-                  class="filter-dark menu-icon"
+                  class="menu-icon-greg"
                   alt="Share Icon"
                 />
                 Playback Speed
               </button>
             </div>
+            <!-- ----------- Menu for the playback speed ----------- -->
             <div
-              class="menu-content playback-speed-menu"
-              id="playbackSpeedMenu"
+              class="menu-content-greg playback-speed-menu-greg"
+              id="playbackSpeedMenuGreg"
               style="display: none"
             >
-              <div id="playbackSpeed">
-                <button id="back-to-options">
+              <div id="playbackSpeedGreg">
+                <button type="button" id="back-to-options-greg">
                   <img
                     src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148618/Shorthand/Global%20Forecast/left-arrow-svgrepo-com.svg"
-                    class="filter-dark menu-icon"
+                    class="menu-icon-greg"
                     alt="Share Icon"
                   />
                   Back to Options
                 </button>
-                <button data-speed="0.25">0.25x</button>
-                <button data-speed="0.5">0.5x</button>
-                <button data-speed="0.75">0.75x</button>
-                <button data-speed="1" selected>1x (Normal)</button>
-                <button data-speed="1.25">1.25x</button>
-                <button data-speed="1.5">1.5x</button>
-                <button data-speed="1.75">1.75x</button>
-                <button data-speed="2">2x</button>
+                <button type="button" data-speed="0.25">0.25x</button>
+                <button type="button" data-speed="0.5">0.5x</button>
+                <button type="button" data-speed="0.75">0.75x</button>
+                <button type="button" data-speed="1" selected>
+                  1x (Normal)
+                </button>
+                <button type="button" data-speed="1.25">1.25x</button>
+                <button type="button" data-speed="1.5">1.5x</button>
+                <button type="button" data-speed="1.75">1.75x</button>
+                <button type="button" data-speed="2">2x</button>
               </div>
             </div>
           </div>
@@ -306,85 +311,114 @@
   </body>
 
   <script>
+    /*---------------GREG--------------------*/
     document.addEventListener("DOMContentLoaded", function () {
-      var audio = document.getElementById("audio");
-      var playPauseButton = document.getElementById("play-pause");
-      var progressBar = document.getElementById("progressBar");
-      var defaultSpeedButton = document.querySelector("button[data-speed='1']");
+      var audioGreg = document.getElementById("audio-greg");
+      var playPauseButtonGreg = document.getElementById("play-pause-greg");
+      var progressBarGreg = document.getElementById("progreeBarGreg");
+      var defaultSpeedButtonGreg = document.querySelector(
+        "button[data-speed='1']"
+      );
       var checkmarkSVG =
-        '<img class="filter-dark menu-icon" src="https://res.cloudinary.com/csisideaslab/image/upload/v1706152179/Shorthand/Global%20Forecast/checkmark-svgrepo-com_1.svg" alt="Selected">';
+        '<img class="menu-icon-greg" src="https://res.cloudinary.com/csisideaslab/image/upload/v1706152179/Shorthand/Global%20Forecast/checkmark-svgrepo-com_1.svg" alt="Selected">';
 
-      // Update progress bar as audio plays
-      audio.addEventListener("timeupdate", () => {
-        var percentage = (audio.currentTime / audio.duration) * 100;
-        document.getElementById("progressBar").style.width = percentage + "%";
+      /* --------- Update progress bar as audio plays --------- */
+      audioGreg.addEventListener("timeupdate", () => {
+        var percentage = (audioGreg.currentTime / audioGreg.duration) * 100;
+        document.getElementById("progreeBarGreg").style.width =
+          percentage + "%";
       });
 
-      // Toggle play/pause button
-      playPauseButton.addEventListener("click", () => {
-        if (audio.paused) {
-          audio.play();
-          playPauseButton.src =
+      /* -------------- Toggle play/pause button -------------- */
+      playPauseButtonGreg.addEventListener("click", () => {
+        if (audioGreg.paused) {
+          audioGreg.play();
+          playPauseButtonGreg.src =
             "https://res.cloudinary.com/csisideaslab/image/upload/v1706119327/Shorthand/Global%20Forecast/pause-svgrepo-com.svg"; // Change to the pause icon
-          playPauseButton.alt = "Pause";
+          playPauseButtonGreg.alt = "Pause";
         } else {
-          audio.pause();
-          playPauseButton.src =
+          audioGreg.pause();
+          playPauseButtonGreg.src =
             "https://res.cloudinary.com/csisideaslab/image/upload/v1706117784/Shorthand/Global%20Forecast/play-svgrepo-com.svg"; // Change to the play icon
-          playPauseButton.alt = "Play";
+          playPauseButtonGreg.alt = "Play";
         }
       });
 
-      // Skip buttons
-      document.getElementById("skip-forward").addEventListener("click", () => {
-        audio.currentTime += 10;
-      });
-
-      document.getElementById("skip-back").addEventListener("click", () => {
-        audio.currentTime -= 10;
-      });
-
-      document.getElementById("skip-to-start").addEventListener("click", () => {
-        audio.currentTime = 0;
-      });
-
-      document.getElementById("skip-to-end").addEventListener("click", () => {
-        audio.currentTime = audio.duration;
-      });
-
-      // Kebab menu functionality
-      document.getElementById("menu-button").addEventListener("click", () => {
-        var menuContent = document.getElementById("menuContent");
-        menuContent.style.display =
-          menuContent.style.display === "none" ? "block" : "none";
-      });
-
-      // Other event listeners for download and share buttons can be added here
-      // Add event listeners for menu items
+      /* ------------------------------------------------------ */
+      /*                      Skip Buttons                      */
+      /* ------------------------------------------------------ */
       document
-        .getElementById("download-audio")
+        .getElementById("skip-forward-greg")
+        .addEventListener("click", () => {
+          audioGreg.currentTime += 10;
+        });
+
+      document
+        .getElementById("skip-back-greg")
+        .addEventListener("click", () => {
+          audioGreg.currentTime -= 10;
+        });
+
+      document
+        .getElementById("skip-to-start-greg")
+        .addEventListener("click", () => {
+          audioGreg.currentTime = 0;
+        });
+
+      document
+        .getElementById("skip-to-end-greg")
+        .addEventListener("click", () => {
+          audioGreg.currentTime = audioGreg.duration;
+        });
+
+      /* ------------------------------------------------------ */
+      /*                       Kebab Menu                       */
+      /* ------------------------------------------------------ */
+
+      /* -------------- Kebab menu show/hide -------------- */
+      document
+        .getElementById("menu-button-greg")
+        .addEventListener("click", () => {
+          var menuContentGreg = document.getElementById("menuContentGreg");
+          menuContentGreg.style.display =
+            menuContentGreg.style.display === "none" ? "block" : "none";
+        });
+
+      /* ------- Kebab menu buttons (download, share, etc) ------ */
+      document
+        .getElementById("download-audio-greg")
         .addEventListener("click", () => {
           var link = document.createElement("a");
+          /* --------------- LINK TO YOUR AUDIO HERE -------------- */
           link.href =
             "https://res.cloudinary.com/dz3ukgab7/video/upload/fl_attachment/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_GregAllen";
-          link.setAttribute(
-            "download",
-            "Gregory C. Allen on U.S.-China Technology Competition"
-          ); // Set the download attribute
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
         });
 
       document
-        .getElementById("share-audio")
+        .getElementById("download-transcript-greg")
+        .addEventListener("click", () => {
+          var link = document.createElement("a");
+          /* ---------------- LINK TO YOUR PDF HERE --------------- */
+          link.href =
+            "https://csis-website-prod.s3.amazonaws.com/s3fs-public/2024-01/240122_Lin_Surveying_Experts.pdf?VersionId=KpijDB0VBA6tKMBZd_TRr4DLn3YXcXsF";
+          link.setAttribute("target", "_blank"); // Force link to open in a new tab
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+
+      document
+        .getElementById("share-audio-greg")
         .addEventListener("click", function () {
           // Your share audio functionality, e.g., using the Web Share API
           if (navigator.share) {
             navigator
               .share({
                 title: "Audio Title",
-                url: audio.src, // You might want to use a different URL for sharing
+                url: audioGreg.src,
               })
               .then(() => {
                 console.log("Thanks for sharing!");
@@ -392,32 +426,51 @@
               .catch(console.error);
           } else {
             // Fallback sharing method, e.g., copying the URL to the clipboard
+            if (navigator.clipboard) {
+              navigator.clipboard
+                .writeText(audioGreg.src)
+                .then(function () {
+                  console.log("URL copied to clipboard");
+                })
+                .catch(function (err) {
+                  console.error("Unable to copy URL to clipboard: ", err);
+                });
+            } else {
+              // Clipboard API not supported, you can use an alternative method here
+              console.log(
+                "Clipboard API not supported. Implement another sharing method."
+              );
+            }
           }
         });
 
       document
-        .getElementById("playback-speed")
+        .getElementById("playback-speed-greg")
         .addEventListener("click", function () {
-          document.getElementById("menuContent").style.display = "none";
-          document.getElementById("playbackSpeedMenu").style.display = "block";
+          document.getElementById("menuContentGreg").style.display = "none";
+          document.getElementById("playbackSpeedMenuGreg").style.display =
+            "block";
         });
 
       document
-        .getElementById("back-to-options")
+        .getElementById("back-to-options-greg")
         .addEventListener("click", function () {
-          document.getElementById("menuContent").style.display = "block";
-          document.getElementById("playbackSpeedMenu").style.display = "none";
+          document.getElementById("menuContentGreg").style.display = "block";
+          document.getElementById("playbackSpeedMenuGreg").style.display =
+            "none";
         });
 
-      // Event listeners for speed options
+      /* ------------------------------------------------------ */
+      /*                  Handle playback speed                 */
+      /* ------------------------------------------------------ */
       var speedOptions = document.querySelectorAll(
-        ".playback-speed-menu button[data-speed]"
+        ".playback-speed-menu-greg button[data-speed]"
       );
 
       speedOptions.forEach(function (button) {
         button.addEventListener("click", function () {
           var speed = this.getAttribute("data-speed");
-          audio.playbackRate = parseFloat(speed);
+          audioGreg.playbackRate = parseFloat(speed);
 
           // Remove checkmarks from all buttons
           speedOptions.forEach(function (otherButton) {
@@ -426,25 +479,32 @@
 
           // Add checkmark to the clicked button
           this.innerHTML = checkmarkSVG + this.textContent;
-
         });
       });
-      defaultSpeedButton.innerHTML =
-        checkmarkSVG + defaultSpeedButton.textContent;
-      defaultSpeedButton.classList.add("selected");
+
+      defaultSpeedButtonGreg.innerHTML =
+        checkmarkSVG + defaultSpeedButtonGreg.textContent;
+
+      defaultSpeedButtonGreg.classList.add("selected");
+
+      /* ------------------------------------------------------ */
+      /*            Close menu if user clicks outside           */
+      /* ------------------------------------------------------ */
+
       // This function will check if the clicked element is outside the menu
       function handleClickOutside(event) {
-        var menuContent = document.getElementById("menuContent");
-        var kebabMenuButton = document.querySelector(".kebab-menu");
+        var menuContentGreg = document.getElementById("menuContentGreg");
+        var kebabMenuButtonGreg = document.querySelector(".kebab-menu-greg");
 
         // Check if the clicked area is outside the menu and not the kebab button
         if (
-          !menuContent.contains(event.target) &&
-          !kebabMenuButton.contains(event.target)
+          !menuContentGreg.contains(event.target) &&
+          !kebabMenuButtonGreg.contains(event.target)
         ) {
-          menuContent.style.display = "none";
+          menuContentGreg.style.display = "none";
           // Also hide the playback speed menu if it's open
-          document.getElementById("playbackSpeedMenu").style.display = "none";
+          document.getElementById("playbackSpeedMenuGreg").style.display =
+            "none";
         }
       }
 
@@ -453,7 +513,7 @@
 
       // Prevent the menu from closing when clicking on the menu itself
       document
-        .getElementById("menuContent")
+        .getElementById("menuContentGreg")
         .addEventListener("click", function (event) {
           event.stopPropagation();
         });

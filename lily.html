@@ -1,394 +1,384 @@
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap");
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Audio Player</title>
 
-  a {
-    text-decoration: none;
-  }
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap");
 
-  /* Mobile-first styling -- the default is for smalls screens */
-  .audio-player-kari {
-    position: relative;
-    width: 100%; /* Full width on smaller screens */
-    height: 411px; /* Adjust height */
-    font-family: "IBM Plex Sans", sans-serif;
-    color: #fffefa; /* Text color - for title, subtitle */
-  }
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: transparent;
+        font-family: "IBM Plex Sans", sans-serif;
+      }
 
-  /* These styles apply on desktop */
-  @media (min-width: 900px) {
-    .audio-player-kari {
-      margin: auto;
-      min-width: 390px;
-      max-width: 700px;
-      max-height: 400px;
-    }
-  }
+      a {
+        text-decoration: none;
+      }
 
-  .background-image-container-kari {
-    position: absolute;
-    border-radius: 20px;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 95%;
-    overflow: hidden;
-    z-index: 1;
-  }
+      .audio-player {
+        position: relative;
+        width: 100%; /* Full width on smaller screens */
+        height: 411px; /* Adjust height */
+        font-family: "IBM Plex Sans", sans-serif;
+        color: #fffefa; /* Text color - for title, subtitle */
+        border-radius: 20px;
+      }
 
-  .background-image-kari {
-    width: 100%;
-    height: auto;
-  }
+      /* These styles apply on desktop */
+      @media (min-width: 900px) {
+        .audio-player {
+          margin: auto;
+          min-width: 390px;
+          max-width: 700px;
+          max-height: 400px;
+        }
+      }
 
-  .controls-container-kari {
-    position: absolute;
-    padding-top: 10px;
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    background-color: #0d1e45; /* Background color for the white box */
-    z-index: 2;
-    bottom: 0;
-  }
+      .background-image-container {
+        position: absolute;
+        border-radius: 20px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 95%; /* Adjust the height as needed */
+        overflow: hidden;
+        z-index: 1;
+      }
 
-  #title-kari {
-    margin: 5px 0 5px 20px;
-    /* line-height: 30px; */
-  }
+      .background-image {
+        width: 100%;
+        height: auto;
+      }
 
-  #subtitle-kari {
-    margin: 0 0 20px 20px;
-  }
+      .controls-container {
+        position: absolute;
+        padding-top: 10px;
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        background-color: #0d1e45; /* Background color for the white box */
+        z-index: 2;
+        bottom: 0;
+      }
 
-  .controls-kari {
-    position: static;
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0px 20px 0px;
-  }
+      #title {
+        margin: 5px 0 5px 20px;
+        max-width: 90%;
+        font-size: 1.6em;
+        font-weight: bold;
+      }
 
-  button {
-    cursor: pointer;
-  }
+      .controls {
+        position: static;
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0px 20px 0px;
+      }
 
-  .progress-container-kari {
-    width: calc(100% - 40px);
-    height: 20px;
-    border-radius: 2px;
-    margin: 15px auto 0 auto;
-    background-color: #ffffff30; /* Background color for the progress bar */
-    position: relative;
-  }
+      button {
+        cursor: pointer;
+      }
 
-  .progress-bar-kari {
-    height: 100%;
-    border-radius: 2px;
-    background-color: #fffefa; /* Color of the progress bar */
-    width: 0%;
-  }
+      .progress-container {
+        width: calc(
+          100% - 40px
+        ); /* Subtract 40px from the total width: 20px left and 20px right */
+        height: 20px;
+        border-radius: 2px;
+        margin: 15px auto 0 auto;
+        background-color: #ffffff30;
+        position: relative;
+      }
 
-  .svg-icon-kari {
-    width: 35px;
-    height: 35px;
-    margin: 10px;
-  }
+      .progress-bar {
+        height: 100%;
+        border-radius: 2px;
+        background-color: #0066cc;
+        width: 0%;
+      }
 
-  .menu-icon-kari {
-    width: 1em; /* 1em is equal to the current font size */
-    height: 1em; /* 1em is equal to the current font size */
-    margin-right: 1.5em; /* Adjust the space between the icon and the text */
-    vertical-align: middle; /* This will vertically center the icon with the text */
-    filter: invert(0%) sepia(6%) saturate(7%) hue-rotate(324deg) brightness(99%)
-      contrast(100%); /* This is the default filter for the icons */
-  }
+      .svg-icon {
+        width: 35px;
+        height: 35px;
+        margin: 10px;
+      }
 
-  .filter-dark-kari {
-    filter: invert(100%) sepia(59%) saturate(541%) hue-rotate(298deg)
-      brightness(104%) contrast(105%);
-    /* This is the default filter for the icons */
-  }
+      .menu-icon {
+        width: 1em; /* 1em is equal to the current font size */
+        height: 1em; /* 1em is equal to the current font size */
+        margin-right: 0.5em; /* Adjust the space between the icon and the text */
+        vertical-align: middle; /* This will vertically center the icon with the text */
+      }
 
-  .kebab-menu-kari {
-    position: absolute;
-    top: 0; /* Align to the top of the controls-container-kari */
-    right: 0; /* Align to the right of the controls-container-kari */
-    padding: 5px; /* Add some space */
-  }
+      .filter-dark {
+        filter: invert(0%) sepia(6%) saturate(7%) hue-rotate(324deg)
+          brightness(99%) contrast(100%);
+      }
 
-  .menu-content-kari {
-    display: none;
-    position: absolute;
-    right: 0; /* Align the dropdown to the right side of the kebab icon */
-    background-color: #f9f9f9;
-    min-width: 180px; /* Minimum width of the dropdown content */
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
+      .filter-light {
+        filter: invert(100%) sepia(59%) saturate(541%) hue-rotate(298deg) brightness(104%) contrast(105%);
+      }
 
-  .menu-content-kari button {
-    color: #000; /* Text color for the menu buttons */
-    padding: 12px 16px;
-    text-decoration: none;
-    background: transparent;
-    border: 0;
-    width: 100%;
-    display: block; /* Stack buttons vertically */
-    text-align: left;
-  }
+      .kebab-menu {
+        position: absolute;
+        top: 0; /* Align to the top of the controls-container */
+        right: 0; /* Align to the right of the controls-container */
+        padding: 5px; /* Add some space */
+      }
 
-  .menu-content-kari button:hover {
-    background-color: #0a2458; /* Hover effect for buttons */
-    color: #fcfcfc; /* Text color for the menu buttons */
-  }
+      .menu-content {
+        display: none;
+        position: absolute;
+        right: 0; /* Align the dropdown to the right side of the kebab icon */
+        background-color: #f9f9f9;
+        min-width: 180px; /* Minimum width of the dropdown content */
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
 
-  .menu-content-kari button:hover .menu-icon-kari {
-    filter: invert(100%) sepia(2%) saturate(22%) hue-rotate(243deg)
-      brightness(107%) contrast(95%); /* Hover effect for menu icons */
-  }
+      .menu-content button {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        background: transparent;
+        border: 0;
+        width: 100%;
+        display: block; /* Stack buttons vertically */
+        text-align: left;
+      }
 
-  .playback-speed-menu-kari {
-    position: absolute;
-    top: 0; /* Adjust this as needed */
-    right: 10px; /* Adjust to align with the kebab menu */
-    max-height: 200px;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 2;
-    overflow-y: scroll;
-  }
+      .menu-content button:hover {
+        background-color: #0a2458; /* Hover effect for buttons */
+        color: #fcfcfc;
+      }
 
-  .playback-speed-menu-kari select {
-    padding: 5px;
-    border: 1px solid #ccc;
-  }
-</style>
+      .menu-content button:hover .menu-icon {
+        filter: invert(100%) sepia(2%) saturate(22%) hue-rotate(243deg)
+          brightness(107%) contrast(95%);
+      }
 
-<div class="audio-player-kari" id="audioPlayerkari">
-  <div class="background-image-container-kari">
-    <img
-      src="https://res.cloudinary.com/dz3ukgab7/image/upload/f_auto,q_auto/v1/GF%20Audio%20Briefs/GF_radial"
-      alt="Background"
-      class="background-image-kari"
-    />
-  </div>
-  <div class="controls-container-kari">
-    <div class="audio-info-kari">
-      <h3 id="title-kari">Audio Brief: kari</h3>
-    </div>
-    <audio
-      id="audio-kari"
-      src="https://res.cloudinary.com/dz3ukgab7/video/upload/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_kariMcElwee"
-    ></audio>
-    <div id="progressContainer" class="progress-container-kari">
-      <div id="progressBarkari" class="progress-bar-kari"></div>
-    </div>
-    <!-- ---------- These are the audio controls ----------- -->
-    <div class="controls-kari">
-      <img
-        src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117793/Shorthand/Global%20Forecast/backward-3-svgrepo-com.svg"
-        class="filter-dark-kari svg-icon-kari"
-        id="skip-to-start-kari"
-        alt="Skip to start"
-      />
-      <img
-        src="https://res.cloudinary.com/csisideaslab/image/upload/v1706202122/Shorthand/Global%20Forecast/backward.svg"
-        class="filter-dark-kari svg-icon-kari"
-        alt="Skip back 10 seconds"
-        id="skip-back-kari"
-      />
-      <img
-        src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117784/Shorthand/Global%20Forecast/play-svgrepo-com.svg"
-        class="filter-dark-kari svg-icon-kari"
-        id="play-pause-kari"
-        alt="Play"
-      />
-      <img
-        src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward.svg"
-        class="filter-dark-kari svg-icon-kari"
-        alt="Skip forward 10 seconds"
-        id="skip-forward-kari"
-      />
-      <img
-        src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward-3-svgrepo-com.svg"
-        class="filter-dark-kari svg-icon-kari"
-        alt="Skip forward 10 seconds"
-        id="skip-to-end-kari"
-      />
-      <!-- --- This is the menu for download, share, etc. ---- -->
-      <div class="kebab-menu-kari">
+      .playback-speed-menu {
+        position: absolute;
+        top: 0; /* Adjust this as needed */
+        right: 10px; /* Adjust to align with the kebab menu */
+        max-height: 200px;
+        background-color: #f9f9f9;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+        overflow-y: scroll;
+      }
+
+      .playback-speed-menu select {
+        padding: 5px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="audio-player" id="audioPlayer">
+      <!-- Background image container -->
+      <div class="background-image-container">
         <img
-          src="https://res.cloudinary.com/csisideaslab/image/upload/v1706120568/Shorthand/Global%20Forecast/kebab-menu-svgrepo-com.svg"
-          class="filter-dark-kari svg-icon-kari"
-          id="menu-button-kari"
-          alt="Menu"
+          src="https://res.cloudinary.com/dz3ukgab7/image/upload/f_auto,q_auto/v1/GF%20Audio%20Briefs/GF_radial"
+          alt="Background"
+          class="background-image"
         />
-        <div class="menu-content-kari" id="menuContentkari" style="display: none">
-          <button type="button" id="download-audio-kari">
-            <img
-              src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
-              class="menu-icon-kari"
-              alt="Download Icon"
-            />
-            Download Audio
-          </button>
-          <button type="button" id="download-transcript-kari">
-            <img
-              src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
-              class="menu-icon-kari"
-              alt="Download Icon"
-            />
-            Download Transcript
-          </button>
-          <button type="button" id="share-audio-kari">
-            <img
-              src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148595/Shorthand/Global%20Forecast/share-alt-svgrepo-com.svg"
-              class="menu-icon-kari"
-              alt="Share Icon"
-            />
-            Share Audio
-          </button>
-          <button type="button" id="playback-speed-kari">
-            <img
-              src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148589/Shorthand/Global%20Forecast/playback-speed-svgrepo-com.svg"
-              class="menu-icon-kari"
-              alt="Share Icon"
-            />
-            Playback Speed
-          </button>
+      </div>
+      <div class="controls-container">
+        <div class="audio-info">
+          <h3 id="title">Audio Brief: Lily McElwee on China's Engagement in the Global South
+          </h3>
         </div>
-        <!-- ----------- Menu for the playback speed ----------- -->
-        <div
-          class="menu-content-kari playback-speed-menu-kari"
-          id="playbackSpeedMenukari"
-          style="display: none"
-        >
-          <div id="playbackSpeedkari">
-            <button type="button" id="back-to-options-kari">
-              <img
-                src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148618/Shorthand/Global%20Forecast/left-arrow-svgrepo-com.svg"
-                class="filter-dark-kari menu-icon-kari"
-                alt="Share Icon"
-              />
-              Back to Options
-            </button>
-            <button type="button" data-speed="0.25">0.25x</button>
-            <button type="button" data-speed="0.5">0.5x</button>
-            <button type="button" data-speed="0.75">0.75x</button>
-            <button type="button" data-speed="1" selected>1x (Normal)</button>
-            <button type="button" data-speed="1.25">1.25x</button>
-            <button type="button" data-speed="1.5">1.5x</button>
-            <button type="button" data-speed="1.75">1.75x</button>
-            <button type="button" data-speed="2">2x</button>
+        <audio
+          id="audio"
+          src="https://res.cloudinary.com/dz3ukgab7/video/upload/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_LilyMcElwee"
+        ></audio>
+        <div id="progressContainer" class="progress-container">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div class="controls">
+          <img
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117793/Shorthand/Global%20Forecast/backward-3-svgrepo-com.svg"
+            class="filter-light svg-icon"
+            id="skip-to-start"
+            alt="Skip to start"
+          />
+          <img
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706202122/Shorthand/Global%20Forecast/backward.svg"
+            class="filter-light svg-icon"
+            alt="Skip back 10 seconds"
+            id="skip-back"
+          />
+          <img
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117784/Shorthand/Global%20Forecast/play-svgrepo-com.svg"
+            class="filter-light svg-icon"
+            id="play-pause"
+            alt="Play"
+          />
+          <img
+            src="https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward.svg"
+            class="filter-light svg-icon"
+            alt="Skip forward 10 seconds"
+            id="skip-forward"
+          />
+          <img
+            src="
+        https://res.cloudinary.com/csisideaslab/image/upload/v1706117789/Shorthand/Global%20Forecast/forward-3-svgrepo-com.svg"
+            class="filter-light svg-icon"
+            alt="Skip forward 10 seconds"
+            id="skip-to-end"
+          />
+          <div class="kebab-menu">
+            <img
+              src="https://res.cloudinary.com/csisideaslab/image/upload/v1706120568/Shorthand/Global%20Forecast/kebab-menu-svgrepo-com.svg"
+              class="filter-light svg-icon"
+              id="menu-button"
+              alt="Menu"
+            />
+            <div class="menu-content" id="menuContent" style="display: none">
+              <button id="download-audio">
+                <img
+                  src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148613/Shorthand/Global%20Forecast/download-svgrepo-com.svg"
+                  class="filter-dark menu-icon"
+                  alt="Download Icon"
+                />
+                Download Audio
+              </button>
+              <button id="share-audio">
+                <img
+                  src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148595/Shorthand/Global%20Forecast/share-alt-svgrepo-com.svg"
+                  class="filter-dark menu-icon"
+                  alt="Share Icon"
+                />
+                Share Audio
+              </button>
+              <button id="playback-speed">
+                <img
+                  src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148589/Shorthand/Global%20Forecast/playback-speed-svgrepo-com.svg"
+                  class="filter-dark menu-icon"
+                  alt="Share Icon"
+                />
+                Playback Speed
+              </button>
+            </div>
+            <div
+              class="menu-content playback-speed-menu"
+              id="playbackSpeedMenu"
+              style="display: none"
+            >
+              <div id="playbackSpeed">
+                <button id="back-to-options">
+                  <img
+                    src="https://res.cloudinary.com/csisideaslab/image/upload/v1706148618/Shorthand/Global%20Forecast/left-arrow-svgrepo-com.svg"
+                    class="filter-dark menu-icon"
+                    alt="Share Icon"
+                  />
+                  Back to Options
+                </button>
+                <button data-speed="0.25">0.25x</button>
+                <button data-speed="0.5">0.5x</button>
+                <button data-speed="0.75">0.75x</button>
+                <button data-speed="1" selected>1x (Normal)</button>
+                <button data-speed="1.25">1.25x</button>
+                <button data-speed="1.5">1.5x</button>
+                <button data-speed="1.75">1.75x</button>
+                <button data-speed="2">2x</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </body>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var audiokari = document.getElementById("audio-kari");
-    var playPauseButtonkari = document.getElementById("play-pause-kari");
-    var progressBarkari = document.getElementById("progressBarkari");
-    var defaultSpeedButtonkari = document.querySelector("button[data-speed='1']");
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+    var audio = document.getElementById("audio");
+    var playPauseButton = document.getElementById("play-pause");
+    var progressBar = document.getElementById("progressBar");
+    var defaultSpeedButton = document.querySelector("button[data-speed='1']");
     var checkmarkSVG =
-      '<img class="filter-dark-kari menu-icon-kari" src="https://res.cloudinary.com/csisideaslab/image/upload/v1706152179/Shorthand/Global%20Forecast/checkmark-svgrepo-com_1.svg" alt="Selected">';
+      '<img class="filter-dark menu-icon" src="https://res.cloudinary.com/csisideaslab/image/upload/v1706152179/Shorthand/Global%20Forecast/checkmark-svgrepo-com_1.svg" alt="Selected">';
 
     /* --------- Update progress bar as audio plays --------- */
-    audiokari.addEventListener("timeupdate", () => {
-      var percentage = (audiokari.currentTime / audiokari.duration) * 100;
-      document.getElementById("progressBarkari").style.width = percentage + "%";
+    audio.addEventListener("timeupdate", () => {
+      var percentage = (audio.currentTime / audio.duration) * 100;
+      document.getElementById("progressBar").style.width = percentage + "%";
     });
 
     /* -------------- Toggle play/pause button -------------- */
-    playPauseButtonkari.addEventListener("click", () => {
-      if (audiokari.paused) {
-        audiokari.play();
-        playPauseButtonkari.src =
+    playPauseButton.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playPauseButton.src =
           "https://res.cloudinary.com/csisideaslab/image/upload/v1706119327/Shorthand/Global%20Forecast/pause-svgrepo-com.svg"; // Change to the pause icon
-        playPauseButtonkari.alt = "Pause";
+        playPauseButton.alt = "Pause";
       } else {
-        audiokari.pause();
-        playPauseButtonkari.src =
+        audio.pause();
+        playPauseButton.src =
           "https://res.cloudinary.com/csisideaslab/image/upload/v1706117784/Shorthand/Global%20Forecast/play-svgrepo-com.svg"; // Change to the play icon
-        playPauseButtonkari.alt = "Play";
+        playPauseButton.alt = "Play";
       }
     });
 
     /* ------------------------------------------------------ */
     /*                      Skip Buttons                      */
     /* ------------------------------------------------------ */
-    document
-      .getElementById("skip-forward-kari")
-      .addEventListener("click", () => {
-        audiokari.currentTime += 10;
-      });
-
-    document.getElementById("skip-back-kari").addEventListener("click", () => {
-      audiokari.currentTime -= 10;
+    document.getElementById("skip-forward").addEventListener("click", () => {
+      audio.currentTime += 10;
     });
 
-    document
-      .getElementById("skip-to-start-kari")
-      .addEventListener("click", () => {
-        audiokari.currentTime = 0;
-      });
+    document.getElementById("skip-back").addEventListener("click", () => {
+      audio.currentTime -= 10;
+    });
 
-    document
-      .getElementById("skip-to-end-kari")
-      .addEventListener("click", () => {
-        audiokari.currentTime = audiokari.duration;
-      });
+    document.getElementById("skip-to-start").addEventListener("click", () => {
+      audio.currentTime = 0;
+    });
+
+    document.getElementById("skip-to-end").addEventListener("click", () => {
+      audio.currentTime = audio.duration;
+    });
 
     /* ------------------------------------------------------ */
     /*                       Kebab Menu                       */
     /* ------------------------------------------------------ */
 
     /* -------------- Kebab menu show/hide -------------- */
-    document
-      .getElementById("menu-button-kari")
-      .addEventListener("click", () => {
-        var menuContentkari = document.getElementById("menuContentkari");
-        menuContentkari.style.display =
-        menuContentkari.style.display === "none" ? "block" : "none";
-      });
+    document.getElementById("menu-button").addEventListener("click", () => {
+      var menuContent = document.getElementById("menuContent");
+      menuContent.style.display =
+        menuContent.style.display === "none" ? "block" : "none";
+    });
 
     /* ------- Kebab menu buttons (download, share, etc) ------ */
-    document
-      .getElementById("download-audio-kari")
-      .addEventListener("click", () => {
-        var link = document.createElement("a");
-        /* --------------- LINK TO YOUR AUDIO HERE -------------- */
-        link.href =
-          "https://res.cloudinary.com/dz3ukgab7/video/upload/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_LilyMcElwee";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+    document.getElementById("download-audio").addEventListener("click", () => {
+      var link = document.createElement("a");
+      /* --------------- LINK TO YOUR AUDIO HERE -------------- */
+      link.href =
+        "https://res.cloudinary.com/dz3ukgab7/video/upload/fl_attachment/f_auto:video,q_auto/v1/GF%20Audio%20Briefs/China_LilyMcElwee";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
 
     document
-      .getElementById("download-transcript-kari")
-      .addEventListener("click", () => {
-        var link = document.createElement("a");
-        /* ---------------- LINK TO YOUR PDF HERE --------------- */
-        link.href =
-          "https://csis-website-prod.s3.amazonaws.com/s3fs-public/2024-01/240122_Lin_Surveying_Experts.pdf?VersionId=KpijDB0VBA6tKMBZd_TRr4DLn3YXcXsF";
-        link.setAttribute("target", "_blank"); // Force link to open in a new tab
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-
-    document
-      .getElementById("share-audio-kari")
+      .getElementById("share-audio")
       .addEventListener("click", function () {
         // Your share audio functionality, e.g., using the Web Share API
         if (navigator.share) {
           navigator
             .share({
               title: "Audio Title",
-              url: audiokari.src,
+              url: audio.src,
             })
             .then(() => {
               console.log("Thanks for sharing!");
@@ -398,7 +388,7 @@
           // Fallback sharing method, e.g., copying the URL to the clipboard
           if (navigator.clipboard) {
             navigator.clipboard
-              .writeText(audiokari.src)
+              .writeText(audio.src)
               .then(function () {
                 console.log("URL copied to clipboard");
               })
@@ -415,31 +405,30 @@
       });
 
     document
-      .getElementById("playback-speed-kari")
+      .getElementById("playback-speed")
       .addEventListener("click", function () {
-        document.getElementById("menuContentkari").style.display = "none";
-        document.getElementById("playbackSpeedMenukari").style.display =
-          "block";
+        document.getElementById("menuContent").style.display = "none";
+        document.getElementById("playbackSpeedMenu").style.display = "block";
       });
 
     document
-      .getElementById("back-to-options-kari")
+      .getElementById("back-to-options")
       .addEventListener("click", function () {
-        document.getElementById("menuContentkari").style.display = "block";
-        document.getElementById("playbackSpeedMenukari").style.display = "none";
+        document.getElementById("menuContent").style.display = "block";
+        document.getElementById("playbackSpeedMenu").style.display = "none";
       });
 
     /* ------------------------------------------------------ */
     /*                  Handle playback speed                 */
     /* ------------------------------------------------------ */
     var speedOptions = document.querySelectorAll(
-      ".playback-speed-menu-kari button[data-speed]"
+      ".playback-speed-menu button[data-speed]"
     );
 
     speedOptions.forEach(function (button) {
       button.addEventListener("click", function () {
         var speed = this.getAttribute("data-speed");
-        audiokari.playbackRate = parseFloat(speed);
+        audio.playbackRate = parseFloat(speed);
 
         // Remove checkmarks from all buttons
         speedOptions.forEach(function (otherButton) {
@@ -451,10 +440,10 @@
       });
     });
 
-    defaultSpeedButtonkari.innerHTML =
-      checkmarkSVG + defaultSpeedButtonkari.textContent;
+    defaultSpeedButton.innerHTML =
+      checkmarkSVG + defaultSpeedButton.textContent;
 
-    defaultSpeedButtonkari.classList.add("selected");
+    defaultSpeedButton.classList.add("selected");
 
     /* ------------------------------------------------------ */
     /*            Close menu if user clicks outside           */
@@ -462,17 +451,17 @@
 
     // This function will check if the clicked element is outside the menu
     function handleClickOutside(event) {
-      var menuContentkari = document.getElementById("menuContentkari");
-      var kebabMenuButtonkari = document.querySelector(".kebab-menu-kari");
+      var menuContent = document.getElementById("menuContent");
+      var kebabMenuButton = document.querySelector(".kebab-menu");
 
       // Check if the clicked area is outside the menu and not the kebab button
       if (
-        !menuContentkari.contains(event.target) &&
-        !kebabMenuButtonkari.contains(event.target)
+        !menuContent.contains(event.target) &&
+        !kebabMenuButton.contains(event.target)
       ) {
-        menuContentkari.style.display = "none";
+        menuContent.style.display = "none";
         // Also hide the playback speed menu if it's open
-        document.getElementById("playbackSpeedMenukari").style.display = "none";
+        document.getElementById("playbackSpeedMenu").style.display = "none";
       }
     }
 
@@ -481,10 +470,10 @@
 
     // Prevent the menu from closing when clicking on the menu itself
     document
-      .getElementById("menuContentkari")
+      .getElementById("menuContent")
       .addEventListener("click", function (event) {
         event.stopPropagation();
       });
   });
-
-</script>
+  </script>
+</html>
